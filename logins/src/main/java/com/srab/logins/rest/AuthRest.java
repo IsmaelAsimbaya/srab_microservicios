@@ -4,6 +4,7 @@ import com.srab.logins.db.Login;
 import com.srab.logins.repo.LoginRepository;
 import com.srab.logins.request.AuthRequest;
 import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -12,6 +13,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.time.LocalDateTime;
 
 @Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,10 +28,11 @@ public class AuthRest {
     @POST
     @Path("/login")
     public Response authenticate(AuthRequest request) {
+        Login user;
 
-        Login user = rep.find("username", request.getUsername()).singleResult();
-
-        if (user == null) {
+        try {
+            user = rep.find("username", request.getUsername()).singleResult();
+        } catch (NoResultException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity("username o password incorrectos").build();
         }
 
@@ -41,6 +45,9 @@ public class AuthRest {
         if (!user.getIs_active()) {
             return Response.status(Response.Status.FORBIDDEN).entity("Cuenta no activa").build();
         }
+
+        user.setLast_login(LocalDateTime.now());
+        rep.persist(user);
 
         return Response.ok("Login successful").build();
     }
