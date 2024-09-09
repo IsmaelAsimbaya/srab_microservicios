@@ -128,7 +128,7 @@ public class UsuarioRest {
         dto.setTelefono_fijo(usuario.getTelefono_fijo());
         dto.setDireccion(usuario.getDireccion());
         dto.setId_lugar(usuario.getId_lugar());
-        dto.setId_horario(usuario.getId_usuario());
+        dto.setId_horario(usuario.getId_horario());
         return dto;
     }
 
