@@ -12,6 +12,9 @@ public class MarcacionDto {
     private String tipo;
     private String ubicacion;
     private String image_source;
+    private String estado;
+    private String observaciones;
+    private String pred_distance;
 
     public Integer getId_marcacion() {
         return id_marcacion;
@@ -69,6 +72,30 @@ public class MarcacionDto {
         this.image_source = image_source;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public String getPred_distance() {
+        return pred_distance;
+    }
+
+    public void setPred_distance(String pred_distance) {
+        this.pred_distance = pred_distance;
+    }
+
     @Override
     public String toString() {
         return "MarcacionDto{" +
@@ -79,6 +106,9 @@ public class MarcacionDto {
                 ", tipo='" + tipo + '\'' +
                 ", ubicacion='" + ubicacion + '\'' +
                 ", image_source='" + image_source + '\'' +
+                ", estado='" + estado + '\'' +
+                ", observaciones='" + observaciones + '\'' +
+                ", pred_distance='" + pred_distance + '\'' +
                 '}';
     }
 }

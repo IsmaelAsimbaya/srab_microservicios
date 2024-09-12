@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/horarios/srab_microservicios.horarios.main.iml" filepath="$PROJECT_DIR$/.idea/modules/horarios/srab_microservicios.horarios.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/logins/srab_microservicios.logins.main.iml" filepath="$PROJECT_DIR$/.idea/modules/logins/srab_microservicios.logins.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lugarestrabajo/srab_microservicios.lugarestrabajo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lugarestrabajo/srab_microservicios.lugarestrabajo.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/marcaciones/srab_microservicios.marcaciones.main.iml" filepath="$PROJECT_DIR$/.idea/modules/marcaciones/srab_microservicios.marcaciones.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/usuarios/srab_microservicios.usuarios.main.iml" filepath="$PROJECT_DIR$/.idea/modules/usuarios/srab_microservicios.usuarios.main.iml" />
+    </modules>
+  </component>
+</project>

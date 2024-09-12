@@ -1,6 +1,9 @@
 package com.srab.horarios.rest;
 
+import com.srab.horarios.db.DiaHorario;
 import com.srab.horarios.db.Horario;
+import com.srab.horarios.dtos.DiaHorarioDTO;
+import com.srab.horarios.dtos.HorarioDTO;
 import com.srab.horarios.repo.HorarioRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -9,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/horario")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,8 +24,11 @@ public class HorarioRest {
     HorarioRepository rep;
 
     @GET
-    public List<Horario> findAll() {
-        return rep.findAll().list();
+    public List<HorarioDTO> findAll() {
+        List<Horario> horarios = rep.findAll().list();
+        return horarios.stream()
+                .map(HorarioRest::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     @GET
@@ -31,11 +38,16 @@ public class HorarioRest {
         if (horario.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(horario.get()).build();
+
+        HorarioDTO horarioDTO = mapToDTO(horario.get());
+        return Response.ok(horarioDTO).build();
     }
 
     @POST
     public Response create(Horario horario) {
+        for (DiaHorario diaHorario : horario.getDiasHorario()) {
+            diaHorario.setHorario(horario);
+        }
         rep.persist(horario);
         return Response.status(Response.Status.CREATED.getStatusCode(), "horario creado").build();
     }
@@ -47,10 +59,13 @@ public class HorarioRest {
         if (horarioaux == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } else {
-            horarioaux.setHoraEntrada(horario.getHoraEntrada());
-            horarioaux.setHoraSalida(horario.getHoraSalida());
-            horarioaux.setDiasSemana(horario.getDiasSemana());
             horarioaux.setNombre(horario.getNombre());
+            horarioaux.getDiasHorario().clear();
+            for (DiaHorario diaHorario : horario.getDiasHorario()) {
+                diaHorario.setHorario(horarioaux);
+                horarioaux.getDiasHorario().add(diaHorario);
+            }
+            rep.persist(horarioaux);
         }
         return Response.ok().build();
     }
@@ -62,4 +77,22 @@ public class HorarioRest {
         return Response.ok().build();
     }
 
+    private static HorarioDTO mapToDTO(Horario horario) {
+        HorarioDTO horarioDTO = new HorarioDTO();
+        horarioDTO.setId_horario(horario.getId_horario());
+        horarioDTO.setNombre(horario.getNombre());
+        List<DiaHorarioDTO> diasHorarioDTO = horario.getDiasHorario().stream()
+                .map(HorarioRest::mapDiaHorarioToDTO)
+                .collect(Collectors.toList());
+        horarioDTO.setDiasHorario(diasHorarioDTO);
+        return horarioDTO;
+    }
+
+    private static DiaHorarioDTO mapDiaHorarioToDTO(DiaHorario diaHorario) {
+        DiaHorarioDTO diaHorarioDTO = new DiaHorarioDTO();
+        diaHorarioDTO.setDiaSemana(diaHorario.getDiaSemana());
+        diaHorarioDTO.setHoraEntrada(diaHorario.getHoraEntrada());
+        diaHorarioDTO.setHoraSalida(diaHorario.getHoraSalida());
+        return diaHorarioDTO;
+    }
 }

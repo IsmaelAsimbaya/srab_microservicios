@@ -20,4 +20,6 @@ public interface MarcacionRestClient {
     @Path("/usuario/{id_usuario}")
     List<MarcacionDto> findAllByIdUsuario(@PathParam("id_usuario") Integer id_usuario);
 
+    @POST
+    void create(MarcacionDto marcacion);
 }

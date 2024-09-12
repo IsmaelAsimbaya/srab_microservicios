@@ -59,6 +59,12 @@ public class MarcacionRest {
     }
 
     @GET
+    @Path("/estado/{estado}")
+    public List<Marcacion> findAllByEstado(@PathParam("estado") String estado) {
+        return rep.find("estado", estado).list();
+    }
+
+    @GET
     @Path("/{id}")
     public Response getById(@PathParam("id") Integer id) {
         var marcacion = rep.findByIdOptional(id);
@@ -87,6 +93,9 @@ public class MarcacionRest {
             marcacionaux.setTipo(marcacion.getTipo());
             marcacionaux.setUbicacion(marcacion.getUbicacion());
             marcacionaux.setImage_source(marcacion.getImage_source());
+            marcacionaux.setEstado(marcacion.getEstado());
+            marcacionaux.setObservaciones(marcacion.getObservaciones());
+            marcacionaux.setPred_distance(marcacion.getPred_distance());
         }
         return Response.ok().build();
     }

@@ -1,12 +1,11 @@
-package com.srab.usuarios.dtos;
+package com.srab.horarios.dtos;
 
 import java.util.List;
 
-public class HorarioDto {
-
+public class HorarioDTO {
     private Integer id_horario;
     private String nombre;
-    private List<DiaHorarioDto> diasHorario;
+    private List<DiaHorarioDTO> diasHorario;
 
     public Integer getId_horario() {
         return id_horario;
@@ -24,17 +23,17 @@ public class HorarioDto {
         this.nombre = nombre;
     }
 
-    public List<DiaHorarioDto> getDiasHorario() {
+    public List<DiaHorarioDTO> getDiasHorario() {
         return diasHorario;
     }
 
-    public void setDiasHorario(List<DiaHorarioDto> diasHorario) {
+    public void setDiasHorario(List<DiaHorarioDTO> diasHorario) {
         this.diasHorario = diasHorario;
     }
 
     @Override
     public String toString() {
-        return "HorarioDto{" +
+        return "HorarioDTO{" +
                 "id_horario=" + id_horario +
                 ", nombre='" + nombre + '\'' +
                 ", diasHorario=" + diasHorario +
